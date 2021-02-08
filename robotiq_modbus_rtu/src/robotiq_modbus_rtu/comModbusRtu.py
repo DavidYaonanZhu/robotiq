@@ -44,7 +44,9 @@ The module depends on pymodbus (http://code.google.com/p/pymodbus/) for the Modb
 """
 
 from pymodbus.client.sync import ModbusSerialClient
+from pymodbus.register_read_message import ReadHoldingRegistersResponse
 from math import ceil
+import time
 
 class communication:	
 
@@ -86,12 +88,23 @@ class communication:
       #To do!: Implement try/except 
       #Get status from the device
       response = self.client.read_holding_registers(0x07D0, numRegs, unit=0x0009)
+      retries = 50
+      # To get around spuratic - object has no attribute 'registers'
+      while not isinstance(response, ReadHoldingRegistersResponse):
+          response = self.client.read_holding_registers(0x07D0, numRegs, unit=0x0009)
+          retries -= 1
+          time.sleep(0.01)
+          #if retries <= 0: raise TypeError("Failed to get status after 50 tries") 
+              #except TypeError as e:
+              #print(e)
+
 
       #Instantiate output as an empty list
       output = []
 
       #Fill the output with the bytes in the appropriate order
       for i in range(0, numRegs):
+         
          output.append((response.getRegister(i) & 0xFF00) >> 8)
          output.append( response.getRegister(i) & 0x00FF)
       
