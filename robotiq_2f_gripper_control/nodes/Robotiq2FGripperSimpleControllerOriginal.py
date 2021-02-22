@@ -48,7 +48,7 @@ from time import sleep
 import os.path
 from os import path
 import os
-
+outputMsg
 
 def genCommand(char, command):
     """Update the command according to the character entered by the user."""    
@@ -156,22 +156,22 @@ def publisher():
     rospy.sleep(1)
 
     while not rospy.is_shutdown():
-        if path.exists("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_open.txt"):
-            command = genCommand("o", command)   # Open and do not block thread while completing goal
-            pub.publish(command)
-            rospy.sleep(0.1)
-            os.remove("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_open.txt")
+        # if path.exists("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_open.txt"):
+        #     command = genCommand("o", command)   # Open and do not block thread while completing goal
+        #     pub.publish(command)
+        #     rospy.sleep(0.1)
+        #     os.remove("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_open.txt")
 
-        if path.exists("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_close.txt"):
-            command = genCommand("c", command)
-            pub.publish(command)
-            rospy.sleep(0.1)
-            os.remove("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_close.txt")
+        # if path.exists("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_close.txt"):
+        #     command = genCommand("c", command)
+        #     pub.publish(command)
+        #     rospy.sleep(0.1)
+        #     os.remove("/home/ur/catkin_ws/src/moveit_tutorials/doc/move_group_interface/src/filename_close.txt")
 
 
-        #command = genCommand(askForCommand(command), command)
+        command = genCommand(askForCommand(command), command)
         
-        #pub.publish(command)
+        pub.publish(command)
 
         rospy.sleep(0.1)
                         
